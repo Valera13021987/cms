@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -41,6 +42,9 @@ class CategoriesController extends Controller
         Category::create([
             'name' => $request->name
         ]);
+
+        session()->flash('success', 'Category created successfully');
+
         return redirect(route('categories.index'));
     }
 
