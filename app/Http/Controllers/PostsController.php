@@ -91,12 +91,28 @@ class PostsController extends Controller
      * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)  //id вместо Post так как Post можеть бьіть уже soft deleted
     {
-        $post->delete();
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
-        session()->flash('success', 'Post trashed successfully');
+        if ($post->trashed()){
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
+
+        session()->flash('success', 'Post deleted successfully');
 
         return redirect(route('posts.index'));
+    }
+
+
+    /**
+     * display a list of all trashed posts
+     */
+    public function trashed(){
+        $trashed = Post::onlyTrashed()->get(); //get only soft-deleted
+
+        return view('posts.index')->withPosts($trashed);   //same as ->with('posts', $trashed)
     }
 }
