@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -15,7 +16,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        return view('posts.index')->with('posts', Post::all());
     }
 
     /**
@@ -37,7 +38,7 @@ class PostsController extends Controller
     public function store(CreatePostsRequest $request)
     {
         $image = $request->image->store('posts');
-
+        $image = Storage::url($image);
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
