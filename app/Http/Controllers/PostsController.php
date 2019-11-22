@@ -38,7 +38,6 @@ class PostsController extends Controller
     public function store(CreatePostsRequest $request)
     {
         $image = $request->image->store('posts');
-        $image = Storage::url($image);
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -96,6 +95,7 @@ class PostsController extends Controller
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
         if ($post->trashed()){
+            Storage::delete($post->image);
             $post->forceDelete();
         } else {
             $post->delete();

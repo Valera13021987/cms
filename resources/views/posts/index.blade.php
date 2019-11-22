@@ -22,7 +22,7 @@
                     @foreach($posts as $post)
                         <tr>
                             <td>
-                                <img src="{{ $post->image }}" alt="" width="60px" height="60px">
+                                <img src="{{ asset('storage/'.$post->image) }}" alt="" width="60px" height="60px">
                             </td>
                             <td>{{ $post->title }}</td>
                             @if(!$post->trashed())
