@@ -21,7 +21,8 @@
 
                 <div class="form-group">
                     <label for="contentX">ContentX</label>
-                    <textarea name="contentX" id="contentX" cols="5" rows="5" class="form-control"></textarea>
+                    <input id="contentX" type="hidden" name="contentX">
+                    <trix-editor input="contentX"></trix-editor>
                 </div>
 
                 <div class="form-group">
@@ -43,4 +44,12 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.0/trix.js"></script>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.0/trix.css">
 @endsection
