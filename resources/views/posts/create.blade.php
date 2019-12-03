@@ -3,32 +3,42 @@
 @section('content')
     <div class="card card-default">
         <div class="card-header">
-            Create post
+            {{ isset($post) ? 'Edit post' : 'Create post' }}
         </div>
         <div class="card-body">
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ isset($post) ? route('posts.update', $post->id) : route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+
+                @if(isset($post))
+                    @method('put')
+                @endif
 
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" name="title" id="title">
+                    <input type="text" class="form-control" name="title" id="title" value="{{ isset($post) ? $post->title : '' }}">
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" cols="5" rows="5" class="form-control"></textarea>
+                    <textarea name="description" id="description" cols="5" rows="5" class="form-control">{{ isset($post) ? $post->description : '' }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="contentX">ContentX</label>
-                    <input id="contentX" type="hidden" name="contentX">
+                    <input id="contentX" type="hidden" name="contentX" value="{{ isset($post) ? $post->contentX : '' }}">
                     <trix-editor input="contentX"></trix-editor>
                 </div>
 
                 <div class="form-group">
                     <label for="published_at">Published at</label>
-                    <input type="text" class="form-control" name="published_at" id="published_at">
+                    <input type="text" class="form-control" name="published_at" id="published_at" value="{{ isset($post) ? $post->published_at : '' }}">
                 </div>
+
+                @if(isset($post))
+                    <div class="form-group">
+                        <img src="{{ asset('storage/'.$post->image)}}" alt="" style="width: 100%">
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label for="image">Image</label>
@@ -37,7 +47,7 @@
 
                 <div class="form-group">
                     <button class="btn btn-success" type="submit">
-                        Create post
+                        {{ isset($post) ? 'Update post' : 'Create post' }}
                     </button>
                 </div>
 
