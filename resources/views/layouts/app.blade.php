@@ -17,6 +17,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <style>
+        a.btn-info{
+            color: white;
+        }
+    </style>
+
     @yield('css')
 </head>
 <body>
@@ -78,6 +84,11 @@
                     @if(session()->has('success'))
                         <div class="alert alert-success">
                             {{ session()->get('success') }}
+                        </div>
+                    @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
                         </div>
                     @endif
                     <div class="row">
