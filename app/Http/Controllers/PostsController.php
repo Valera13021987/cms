@@ -119,6 +119,17 @@ class PostsController extends Controller
     }
 
 
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+
+        $post->restore();
+
+        session()->flash('success', 'Post restored successfully');
+
+        return redirect()->back();
+    }
+
     /**
      * display a list of all trashed posts
      */
