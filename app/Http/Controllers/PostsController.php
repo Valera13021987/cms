@@ -92,6 +92,7 @@ class PostsController extends Controller
             $post->deleteImage();
             $data['image'] = $image;
         }
+        $data['category_id'] = $request->category; //my refactoring for update posts category
         $post->update($data);
 
         session()->flash('success', 'Post updated successfully');
